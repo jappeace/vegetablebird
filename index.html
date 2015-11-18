@@ -21,6 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <head>
     <meta charset="UTF-8">
     <title>Vegetable bird</title>
+	<!-- some css styling -->
 	<style>
 		#locations{
 			background-image:url("img/huaqiao.png");
@@ -43,7 +44,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <body>
   <h1> Birds </h1>
   <div id="locations">
-	  <!-- 
+	  <!--
+	  	this is comment
 	  	You can just copy paste these lines to add more birds
 		the left top are the cordinate lines in pixels. the
 		top:0, left:0 is the top left point of the screen.
@@ -53,30 +55,46 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	  -->
 	  <span
 		  style="left:90px; top:342px;"
-		  data-img="sparrow.png"
+		  data-img="sparrow.jpg"
 		  data-information="likes to peck trees">
 		  Sparrow
 	  </span>
 	  <span
 		  style="left:96px; top:253px;"
-		  data-img="hurron.png"
+		  data-img="hurron.jpg"
 		  data-information="Can you use it in a sentence">
+		  <!-- I thought it was a bird -->
 		  Hurron
 	  </span>
   </div>
   <div id="information">
 	  <h2>Information</h2>
-	  <p></p>
+	  <p>Press the bird names to see more information about that bird</p>
+	  <!-- the browser will scale the image correctly if you only set a width-->
+	  <img width="500px"></img>
   </div>
+  <!-- here starts javascript -->
   <script>
+	  // text in here is comment
+	  // wait until the entire document is loaded
 	  $( document ).ready(function() {
+		  // just a log message, you can see these in the inspect element 
+		  // window of your browser
 		  console.log("ready!, hello birds!")
-			  $("#locations span").click(function(){
-				  var birdname = $(this).html()
-				  var info = $(this).data("information")
-				  $("#information h2").html("Information about "+birdname)
-				  $("#information p").html(info)
-			  })
+
+		  // select all the spans in the element with
+		  // id locations and execute this function when you click on it.
+		  $("#locations span").click(function(){
+			  // get the birdname for the title
+			  var birdname = $(this).html()
+			  $("#information h2").html(birdname)
+
+			  var info = $(this).data("information")
+			  $("#information p").html(info)
+
+			  var src = $(this).data("img")
+			  $("#information img").attr("src", "img/"+src)
+		  })
 	  });
 
   </script>
