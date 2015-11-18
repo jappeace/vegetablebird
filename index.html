@@ -57,6 +57,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	  <span
 		  style="left:45px; top:461px;"
 		  data-img="ardeola_bacchus.png"
+		  data-fullname="池鹭 Ardeola bacchus 鹳形目 鹭科 池鹭属"
 		  data-information="
 		  外貌：体型略小(47厘米)、翼白色、身体具褐色纵纹的鹭。雌雄鸟同色，雌鸟体形略小。有繁殖羽：头及颈深栗色，胸紫酱色。 
 		  习性：通常栖息于稻田、池塘、湖泊、水库和沼泽湿地等水域，有时也见于水域附近 的竹林和树上，常单独或成小群活动，有时也集成多达数十只的大群在一起，性不甚畏人。 
@@ -85,8 +86,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		  // id locations and execute this function when you click on it.
 		  $("#locations span").click(function(){
 			  // get the birdname for the title
-			  var birdname = $(this).html()
-			  $("#information h2").html(birdname)
+			  var fullname = $(this).data("fullname")
+			  $("#information h2").html(fullname)
 
 			  var info = $(this).data("information")
 			  $("#information p").html(info)
