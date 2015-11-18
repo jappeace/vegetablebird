@@ -679,22 +679,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	  // text in here is comment
 	  // wait until the entire document is loaded
 	  $( document ).ready(function() {
-		  // just a log message, you can see these in the inspect element 
-		  // window of your browser
-		  console.log("ready!, hello birds!")
+				// just a log message, you can see these in the inspect element 
+				// window of your browser
+				console.log("ready!, hello birds!")
 
-		  // select all the spans in the element with
-		  // id locations and execute this function when you click on it.
-		  $("#locations span").click(function(){
-			  // get the birdname for the title
-			  var fullname = $(this).data("fullname")
-			  $("#information h2").html(fullname)
+				// select all the spans in the element with id locations
+				var locations = $("#locations span")
+				// execute this function when you click on it.
+				locations.click(function(){
+				// get the birdname for the title
+				var fullname = $(this).data("fullname")
+				$("#information h2").html(fullname)
 
-			  var info = $(this).data("information")
-			  $("#information p").html(info)
+				var info = $(this).data("information")
+				$("#information p").html(info)
 
-			  var src = $(this).data("img")
-			  $("#information img").attr("src", "img/"+src)
+				var src = $(this).data("img")
+				$("#information img").attr("src", "img/"+src)
 		  })
 	  });
 
