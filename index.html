@@ -3,16 +3,54 @@
   <head>
     <meta charset="UTF-8">
     <title>Vegetable bird</title>
+	<style>
+		#locations{
+			background-image:url("img/huaqiao.png");
+			width:732px;
+			height:821px;
+			float:left;
+			margin-right:10px;
+		}
+		#locations span{
+			position:relative;
+			color:white;
+		}
+		#information{
+		}
+	</style>
+	<!-- v. 1.11.3-->
+	<script src="lib/jquery.min.js"></script>
   </head>
+
   <body>
   <h1> Birds </h1>
-    <!-- Include Scala.js compiled code -->
-    <script type="text/javascript" src="./target/scala-2.11/scala-js-tutorial-fastopt.js"></script>
-    <!-- Run tutorial.webapp.TutorialApp -->
-    <script type="text/javascript">
-      document.writeline(nl.jappielkooster.vegetablebird.Main().main());
-    </script>
+  <div id="locations">
+	  <span
+		  style="left:90px; top:342px;"
+		  data-information="likes to peck trees">
+		  Sparrow
+	  </span>
+	  <span
+		  style="left:96px; top:253px;"
+		  data-information="Can you use it in a sentence">
+		  Hurron
+	  </span>
+  </div>
+  <div id="information">
+	  <h2>Information</h2>
+	  <p></p>
+  </div>
+  <script>
+	  $( document ).ready(function() {
+		  console.log("ready!, hello birds!")
+			  $("#locations span").click(function(){
+				  var birdname = $(this).html()
+				  var info = $(this).data("information")
+				  $("#information h2").html("Information about "+birdname)
+				  $("#information p").html(info)
+			  })
+	  });
 
-	<small>Jappie</small>
+  </script>
   </body>
 </html>
