@@ -1,0 +1,4 @@
+enablePlugins(ScalaJSPlugin)
+name := "VegetableBird"
+scalaVersion := "2.11.5" // or any other Scala version >= 2.10.2
+libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.8.0"
