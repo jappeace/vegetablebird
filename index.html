@@ -23,16 +23,63 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <title>Vegetable bird</title>
 	<!-- v. 1.11.3-->
 	<script src="lib/jquery.min.js"></script>
+	<link rel="stylesheet" href="lib/leaflet/leaflet.css" />
+	<script src="lib/leaflet/leaflet.js"></script>
+	<style>
+	#map {
+		height: 700px;
+	}
+	.hidden{
+		display:none;
+		position:absolute;
+		left:-999em;
+	}
+	form div{
+		clear:both;
+		width:100%;
+		text-align:right;
+	}
+	form div span{
+		float:left;
+	}
+	.button{
+		border:1px solid gray;
+		background: rgba(0,0,0,0.5);
+		float:none;
+		cursor:pointer;
+
+	}
+	.button:active{
+		background: rgba(0,0,0,0.25);
+
+	}
+	</style>
   </head>
 
   <body>
   <!-- here starts javascript -->
+	<div id="map"></div>
   <script>
 	  // text in here is comment
 	  // wait until the entire document is loaded
 	  $( document ).ready(function() {
-
+		var map = L.map('map').setView([24.6058555,118.0816142], 16);
+		L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+			attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+		}).addTo(map);
+		map.on('click', function(e){
+			L.popup().setLatLng(e.latlng)
+				.setContent($("#create-bird-form").html())
+			.openOn(map);
+		});
 	  });
   </script>
+  <div class="hidden" id="create-bird-form">
+	  <form>
+		  <div><span>name:</span> <select class="bird-name" type="text"> </select></div>
+		  <div><span>date:</span> <input class="spot-date" type="datetime"></div>
+		  <div><span class="button create-bird">confirm</span></div>
+	  </form>
+  </div>
   </body>
 </html>
