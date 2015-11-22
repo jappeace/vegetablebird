@@ -26,6 +26,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<link rel="stylesheet" href="lib/leaflet/leaflet.css" />
 	<script src="lib/leaflet/leaflet.js"></script>
 	<style>
+	*{
+		padding:0;
+		margin:0;
+	}
 	#map {
 		height: 700px;
 	}
@@ -34,15 +38,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		position:absolute;
 		left:-999em;
 	}
-	form div{
-		clear:both;
-		width:100%;
-		text-align:right;
+	.field-row {
+	  overflow: hidden;
+	  padding:2px;
+	  width:250px;
 	}
-	form div span{
-		float:left;
+
+	.field-row label {
+	  display: block;
+	  width: 30%;
+	  float: left;
+	  font-size:small;
+	}
+	.field-row .field-container {
+	  width: 65%;
+	  float: right;
+	}
+	.field-container input, .button{
+		padding:4px;
 	}
 	.button{
+		border-radius:15px;
 		border:1px solid gray;
 		background: rgba(0,0,0,0.5);
 		float:none;
@@ -76,9 +92,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   </script>
   <div class="hidden" id="create-bird-form">
 	  <form>
-		  <div><span>name:</span> <select class="bird-name" type="text"> </select></div>
-		  <div><span>date:</span> <input class="spot-date" type="datetime"></div>
-		  <div><span class="button create-bird">confirm</span></div>
+		  <h1> Add bird</h1>
+		  <div class="field-row">
+			  <label>name:</label> 
+			  <div class="field-container">
+				  <input class="bird-name" type="text" /> 
+			  </div>
+		  </div>
+		  <div class="field-row">
+			  <label>date:</label> 
+			  <div class="field-container">
+				  <input class="spot-date" type="text" />
+			  </div>
+		  </div>
+
+		  <div class="field-row">
+			  <span class="button create-bird">confirm</span>
+		  </div>
 	  </form>
   </div>
   </body>
