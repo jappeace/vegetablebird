@@ -33,8 +33,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		padding:0;
 		margin:0;
 	}
-	#map {
+	#map, #extra-info{
 		height: 700px;
+	}
+	#map{
+		width:79%;
+	}
+	#extra-info{
+		padding:1%;
+		position:absolute;
+		top:0px;
+		right:0px;
+		width:18%;
 	}
 	.hidden{
 		display:none;
@@ -60,11 +70,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	.field-container input, .button{
 		padding:4px;
 	}
-	.button{
+	.button, #extra-info{
 		border-radius:15px;
 		border:1px solid gray;
 		background: rgba(0,0,0,0.5);
 		float:none;
+	}
+	.button{
 		cursor:pointer;
 
 	}
@@ -76,12 +88,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		width:auto!important;
 		height:auto!important;
 	}
+	#dataform{
+		width:100%;
+	}
+	#dataform .field-row{
+		width:80%;
+	}
+	textarea{
+		width:80%;
+		height:150px;
+	}
 	</style>
   </head>
 
   <body>
   <!-- here starts javascript -->
-	<div id="map"></div>
+  <div id="map">
+  </div>
+	<div id="extra-info">
+		<h1 class="name">Birdy</h1>
+		<img class="picture" />
+		<p class="description"></p>
+	</div>
   <script>
 	  // text in here is comment
 	  // wait until the entire document is loaded
@@ -91,8 +119,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 		}).addTo(map);
 
-		var spotted = function(){
-			var storage = $("#created-birds");
+		function textAreaStorage(idString){
+			var storage = $(idString);
 			this.read = function(){
 				 return JSON.parse(storage.val());
 			}
@@ -100,7 +128,34 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				storage.val(JSON.stringify(to));
 			}
 			return this
-		}();
+		};
+		var spotted = textAreaStorage("#created-birds");
+		var types = textAreaStorage("#bird-types");
+
+		function refresh() {
+			$.each(previous, function (i,ml) {
+				map.removeLayer(ml);
+			});
+			previous = [];
+			$.each(spotted.read(), function(i,bird){
+				var newMarker = L.marker(bird.coordinates, {
+					icon:L.divIcon({
+						html:bird.name,
+						className:"button birdmarker"
+					}),
+					title: bird.name
+				});
+				previous.push(newMarker);
+				newMarker.on('click', function(){
+					var info = $("#extra-info");
+					info.find(".name").html(bird.name);
+				})
+
+				newMarker.addTo(map);
+			});
+
+
+		};
 
 		map.on('click', function(e){
 			L.popup().setLatLng(e.latlng)
@@ -119,30 +174,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 						coordinates:e.latlng
 					});
 					spotted.write(existing);
+					refresh();
 				}
 			)
 		});
 		var previous = [];
-		function refresh() {
-			$.each(previous, function (i,ml) {
-				map.removeLayer(ml);
-			});
-			previous = [];
-			$.each(spotted.read(), function(i,bird){
-				previous.push(
-					L.marker(bird.coordinates, {
-						icon:L.divIcon({
-							html:bird.name,
-							className:"button birdmarker"
-						}),
-						title: bird.name
-					}).addTo(map)
-				);
-			});
-
-
-		};
-		$("#refresh").click(refresh)
+		$("#refresh").click(refresh);
 	  });
   </script>
   <div class="hidden">
@@ -168,10 +205,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	  </form>
   </div>
   </div>
-  <form>
-  <textarea id="created-birds">
-	  []
-  </textarea>
+  <form id="dataform">
+  <div class="field-row">
+	  <label>created birds:</label>
+	  <div class="field-container">
+	  <textarea id="created-birds">
+		  []
+	  </textarea>
+	  </div>
+  </div>
+  <div class="field-row">
+	  <label>bridtypes</label>
+	  <div class="field-container">
+	  <textarea id="bird-types">
+		  []
+	  </textarea>
+	  </div>
+  </div>
   <span id="refresh" class="button">refresh</span>
   </form>
   </body>
