@@ -152,7 +152,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					info.find(".name").html(bird.name);
 					$.each(types.read(), function(indc, specie){
 						if(specie.name == bird.name){
-							info.find(".picture").attr('src', specie.img);
+							info.find(".picture").attr('src', "img/"+specie.img);
 							info.find(".description").html(specie.information);
 							info.find(".name").html(specie.fullname);
 						}
