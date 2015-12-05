@@ -23,11 +23,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <title>Vegetable bird</title>
 	<!-- v. 1.11.3-->
 	<script src="lib/jquery.min.js"></script>
-	<!--<link rel="stylesheet" href="lib/leaflet/leaflet.css" />
+	<link rel="stylesheet" href="lib/leaflet/leaflet.css" />
 	<script src="lib/leaflet/leaflet.js"></script>
-	-->
-	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v1.0.0-beta.2/leaflet.css">
+	<!--<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v1.0.0-beta.2/leaflet.css">
 	<script src="http://cdn.leafletjs.com/leaflet/v1.0.0-beta.2/leaflet.js"></script>
+	-->
 	<style>
 	*{
 		padding:0;
@@ -72,8 +72,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		background: rgba(0,0,0,0.25);
 
 	}
+	.birdmarker{
+		width:auto!important;
+		height:auto!important;
+	}
 	</style>
-	<script type="text/javascript" src="./target/scala-2.11/vegetable-bird-fastopt.js"></script>
   </head>
 
   <body>
@@ -83,29 +86,77 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	  // text in here is comment
 	  // wait until the entire document is loaded
 	  $( document ).ready(function() {
-		  nl.jappieklooster.vegetablebird.Main().main();
 		var map = L.map('map').setView([24.6058555,118.0816142], 16);
 		L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 			attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 		}).addTo(map);
+
+		var spotted = function(){
+			var storage = $("#created-birds");
+			this.read = function(){
+				 return JSON.parse(storage.val());
+			}
+			this.write = function(to){
+				storage.val(JSON.stringify(to));
+			}
+			return this
+		}();
+
 		map.on('click', function(e){
 			L.popup().setLatLng(e.latlng)
 				.setContent($("#create-bird-form").html())
 			.openOn(map);
+			var form = $("#map .leaflet-popup-content form")
+			form.find(".button").click(
+				function(){
+					var name = form.find(".bird-name").val();
+					var date = form.find(".spot-date").val();
+					console.log("hello world!" + name + " at " + date);
+					var existing = spotted.read();
+					existing.push({
+						name:name,
+						date:date,
+						coordinates:e.latlng
+					});
+					spotted.write(existing);
+				}
+			)
 		});
+		var previous = [];
+		function refresh() {
+			$.each(previous, function (i,ml) {
+				map.removeLayer(ml);
+			});
+			previous = [];
+			$.each(spotted.read(), function(i,bird){
+				previous.push(
+					L.marker(bird.coordinates, {
+						icon:L.divIcon({
+							html:bird.name,
+							className:"button birdmarker"
+						}),
+						title: bird.name
+					}).addTo(map)
+				);
+			});
+
+
+		};
+		$("#refresh").click(refresh)
 	  });
   </script>
-  <div class="hidden" id="create-bird-form">
+  <div class="hidden">
+  <div id="create-bird-form">
 	  <form>
 		  <h1> Add bird</h1>
 		  <div class="field-row">
-			  <label>name:</label> 
+			  <label>name:</label>
 			  <div class="field-container">
-				  <input class="bird-name" type="text" /> 
+				  <input class="bird-name" type="text" />
 			  </div>
 		  </div>
 		  <div class="field-row">
-			  <label>date:</label> 
+			  <label>date:</label>
 			  <div class="field-container">
 				  <input class="spot-date" type="text" />
 			  </div>
@@ -116,5 +167,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		  </div>
 	  </form>
   </div>
+  </div>
+  <form>
+  <textarea id="created-birds">
+	  []
+  </textarea>
+  <span id="refresh" class="button">refresh</span>
+  </form>
   </body>
 </html>
