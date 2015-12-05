@@ -151,11 +151,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 					var info = $("#extra-info");
 					info.find(".name").html(bird.name);
 					$.each(types.read(), function(indc, specie){
-						if(specie.name == bird.name){
-							info.find(".picture").attr('src', "img/"+specie.img);
-							info.find(".description").html(specie.information);
-							info.find(".name").html(specie.fullname);
+						if(specie.name != bird.name){
+							return
 						}
+						info.find(".description").html(specie.information);
+						info.find(".name").html(specie.fullname);
+
+						var img = new Image();
+						var query = ".picture";
+						var path = "img/"+specie.img.split(".")[0];
+						img.onload = function(){
+							info.find(query).attr('src', path+".png");
+						}
+						img.onerror = function(){
+							info.find(query).attr('src', path+".jpg");
+						}
+						img.src = path+".png"
 					});
 
 				});
@@ -240,7 +251,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	"name":"黑喉石鵖"
 },
 {
-"img":"pycnonotus_aurigaste.png",
+"img":"pycnonotus_aurigaster.png",
 "fullname":"白喉红臀鹎 Pycnonotus aurigaster雀形目 鹎科 鹎属",
 "information":" 外貌：白喉红臀鹎的前额、头顶、枕黑色而富有光泽，眼先、眼周、嘴基亦为黑色，耳羽银灰色或灰白色，有的沾灰褐或棕褐色。 习性：白喉红臀鹎属留鸟，栖息地较固定，一般不做长距离飞行。多在相邻树木或树头间来回飞翔。晚上常成群栖息在一起，觅食时才开始分散，但彼此仍通过叫声保持松散的群。常呈35只或10多只的小群活动，有时亦与红耳鹎或黄臀鹎混群。 食性：食性较杂，属杂食性，但以植物性食物为主。植物性食物主要有浆果、榕果、核果、草莓、悬钩子、坚果、豌豆、紫浆果、洋海椒种子，以及花、叶和其他植物种子。动物性食物主要有甲虫、蚊、蚂蚁等鞘翅目、膜翅目、鳞翅目和直翅目昆虫。 叫声：清脆响亮 ",
 	"name":"白喉红臀鹎"
@@ -258,13 +269,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	"name":"红耳鹎"
 },
 {
-"img":"hemixos_castanonotu.png",
+"img":"hemixos_castanonotus.png",
 "fullname":"栗背短脚鹎 Hemixos castanonotus雀形目 鹎科 短脚鹎属",
 "information":" 外貌：栗背短脚鹎额至头顶前部、眼先、颊栗色，头顶、头顶上短的羽冠、枕逐渐转为黑栗色或黑色 习性：常成对或成小群活动在乔木树冠层，也到林下灌木和小树上活动和觅食。 食性：主要以植物性食物为食，也吃昆虫等动物性食物，属杂食性。所吃食物主要为洋伞果、核果、乌饭果等植物果实与种子。昆虫主要有叶甲、象甲、蛾类、蜂类、蝇类等，以及鞘翅目、双翅目、鳞翅目、膜 翅目、直翅目等昆虫。 叫声：响亮的责骂声及偏高的银铃般叫声\"tickety boo\"。[ ",
 	"name":"栗背短脚鹎"
 },
 {
-"img":"spizixos_semitorque.png",
+"img":"spizixos_semitorques.png",
 "fullname":"领雀嘴鹎 Spizixos semitorques雀形目 鹎科 雀嘴鹎属",
 "information":" 外貌：额、头顶黑色（台湾亚种灰色），额基近鼻孔处和下嘴基部各有一小束白羽，颊和耳羽黑色具白色细纹。 习性：常成群活动，有时也见单独或成对活动的。 食性：食性较杂。食物主要以植物性食物为主，其中尤以野果占优势，主要种类有草莓、黄莓、马桑、胡颓子、花揪、荚蒾、野葡萄、樱桃、长春藤果实、五加科果实、鸡屎藤果实、蔷薇果实、麻子、禾本科种子、豆科种子及嫩叶等。动物性食物主要有金龟子、步行虫等鞘翅目和其他昆虫。[1]  叫声：声婉转悦耳，其声为‘pade，pade’。 ",
 	"name":"领雀嘴鹎"
@@ -276,13 +287,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	"name":"北红尾鸲"
 },
 {
-"img":"copsychus_saulari.png",
+"img":"copsychus_saularis.png",
 "fullname":"鹊鸲 Copsychus saularis雀形目 鸫科 鹊鸲属",
 "information":" 外貌：头顶至尾上覆羽黑色，略带蓝色金属光泽；飞羽和大覆羽黑褐色，内侧次级飞羽外翈大部和次级覆羽均为白色，构成明显的白色翼斑，其他覆羽与背部同色 习性：鹊鸲属留鸟。性活泼、大胆，不畏人，好斗，特别是繁殖期，常为争偶而格斗。单鹊鸲属独或成对活动。休息时常展翅翘尾，有时将尾往上翘到背上，尾梢几与头接触。 食性：主要以昆虫为食。所吃食物种类常见有金龟甲、瓢甲、锹形甲、步行虫、蝼蛄、蟋蟀、浮尘子、蚂蚁、蝇、蜂、蛹等鞘翅目、鳞翅目、直翅目、膜翅目、双翅目、同翅目、异翅目等昆虫和昆虫幼虫。 叫声：鸣声婉转多变，悦耳动听。尤其是繁殖期间，雄鸟鸣叫更为激昂多变，其他季节早晚亦善鸣，常边鸣叫边跳跃。 ",
 	"name":"鹊鸲"
 },
 {
-"img":"eurasian_Blackbir.png",
+"img":"eurasian_blackbird.png",
 "fullname":"乌鸫 Eurasian Blackbird, Blackbird, Common Blackbird雀形目 鸫科 鸫属",
 "information":" 外貌：乌鸫雄鸟全身大致黑色、黑褐色或乌褐色，有的沾锈色或灰色。上体包括两翅和尾羽是黑色。下体黑褐，色稍淡，颏缀以棕色羽缘，喉亦微染棕色而微具黑褐色纵纹。嘴黄，眼珠呈桔黄色，羽毛不易脱落，脚近黑色。 习性：常结小群在地面上奔驰，亦常至垃圾堆及厕所等处找食。栖落树枝前常发出急促的“吱、吱”短叫声，歌声嚎亮动听，并善仿其他鸟鸣。胆小，眼尖，对外界反应灵敏，夜间受到惊吓时会飞离原栖地。 食性：主要以昆虫为食。所吃食物有鳞翅目幼虫、尺蠖蛾科幼虫、蝽科幼虫、蝗虫、金龟子、甲虫、步行虫等双翅目、鞘翅目、直翅目昆虫和幼虫。 也吃樟籽（食后将籽核吐出）、榕果等果实，以及杂草种子等植物。 叫声：栖落树枝前常发出急促的“吱、吱”短叫声，歌声嚎亮动听，并善仿其他鸟鸣。 ",
 	"name":"乌鸫"
@@ -330,7 +341,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	"name":"棕背伯劳"
 },
 {
-"img":"acridotheres_cristatellu.png",
+"img":"acridotheres_cristatellus.png",
 "fullname":"八哥 Acridotheres cristatellus雀形目 椋鸟科 八哥属",
 "information":" 外貌：八哥通体乌黑色，矛状额羽延长成簇状耸立于嘴基，形如冠状，头顶至后颈、头侧、颊和耳羽呈矛状、绒黑色具蓝绿色金属光泽，其余上体缀有淡紫褐色，不如头部黑而辉亮。两翅与背同色，初级覆羽先端和初级飞羽基部白色，形成宽阔的白色翅斑，飞翔时尤为明显。 习性：性喜结群，常立水牛背上，或集结于大树上，或成行站在屋脊上，每至暮时常呈大群翔舞空中，噪鸣片刻后栖息。夜宿于竹林、大树或芦苇丛，并与其他椋鸟混群栖息。 在翻耕过的农地觅食，或站在牛、猪等家畜背上啄食寄生虫。性活泼，成群活动，有时集成大群，特别是傍晚，集成大群在树上过夜。夜栖地点较为固定，常在附近地上活动和觅食。 食性：野生八哥食性杂，主要以蝗虫、蚱蜢、金龟子、蛇、毛虫、地老虎、蝇、虱等昆虫和昆虫幼虫为食，也吃谷粒、植物果实和种子等植物性食物。 叫声：善鸣叫，尤其在傍晚时甚为喧闹 ",
 	"name":"八哥"
@@ -348,7 +359,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	"name":"中白鹭"
 },
 {
-"img":"egretta_鹳形目.png",
+"img":"egretta.png",
 "fullname":"白鹭 Egretta 鹳形目 鹭科 白鹭属",
 "information":" 外貌：体大羽长，体长约90厘米，是白鹭属中体型较大者，夏羽的成鸟全身乳白色；嘴巴黑色；头有短小羽冠； 肩及肩间着生成丛的长蓑羽，一直向后伸展，通常超过尾羽尖端10多厘米，有时不超过；蓑羽羽干基部强硬，至羽端渐小，羽支纤细分散；冬羽的成鸟背无蓑羽，头无羽冠，虹膜淡黄色。 习性：与其他鹭类大致相似，但有些种类有求偶表演，包括炫示其羽毛。英语中egret（或aigrette）一词亦指白鹭的羽毛。白鹭是涉禽， 食性：常去沼泽地，湖泊，潮湿的森林和其他湿地环境，捕食浅水中的小鱼，两栖类，爬虫类、哺乳动物和甲壳动物。在乔木或灌木上，或者在地面筑起凌乱的大巢。 ",
 	"name":"白鹭"
